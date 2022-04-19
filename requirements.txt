@@ -1,0 +1,7 @@
+fiftyone==0.15.0.1
+matplotlib==3.5.1
+numpy==1.22.3
+Pillow==9.1.0
+opencv-python-headless==4.5.4.60
+git+https://github.com/openai/CLIP.git #clip
+torch==1.11.0
