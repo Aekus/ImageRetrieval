@@ -1,4 +1,5 @@
 import json
+import os
 from PIL import Image
 
 """
@@ -27,9 +28,18 @@ def get_area(x1, y1, x2, y2):
 
 
 """
+File path utils
+"""
+
+
+def listdir_full_path(dir_name):
+    return [os.path.join(dir_name, file_name) for file_name in os.listdir(dir_name)]
+
+
+"""
 Image utils
 """
 
 
 def load_image(path):
-  return Image.open(path)
+    return Image.open(path)

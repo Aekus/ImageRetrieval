@@ -15,7 +15,7 @@ class FullConcatModel(BaseModel):
             batch = self.paths[i:i + self.batchsize]
             images = self.image_list_to_tensor(batch)
 
-            logits = self.model(images, text)
+            logits = self.model(images, text)[1]
             if torch.max(logits) > best_score:
                 best_score = torch.max(logits)
                 best_index = i + torch.argmax(logits)
