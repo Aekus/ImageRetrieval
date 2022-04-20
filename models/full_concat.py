@@ -1,4 +1,4 @@
-from base import BaseModel
+from models.base import BaseModel
 import clip
 import torch
 

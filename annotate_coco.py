@@ -35,4 +35,4 @@ if __name__ == '__main__':
     dataset = download_coco(args.classes, args.numsamples, directory)
 
     annotations = make_class_annotations(dataset)
-    write_dict('outfile', annotations)
+    write_dict(args.outfile, annotations)

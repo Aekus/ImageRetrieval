@@ -15,7 +15,7 @@ class BaseModel():
         return self.preprocess(im).to(self.device)
 
     def image_list_to_tensor(self, paths):
-        preprocessed_images = [self.image_to_tensor(path, self.preprocess, self.device) for path in paths]
+        preprocessed_images = [self.image_to_tensor(path) for path in paths]
 
         return torch.stack(preprocessed_images).to(self.device)
 
