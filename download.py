@@ -2,14 +2,14 @@ import fiftyone.zoo as foz
 import argparse
 
 
-def download_coco(classes, num_samples, dir):
+def download_coco(classes, num_samples, directory):
     return foz.load_zoo_dataset(
         "coco-2017",
         split="validation",
         label_types=["detections", "segmentations"],
         classes=classes,
         max_samples=num_samples,
-        dataset_dir=dir,
+        dataset_dir=directory,
     )
 
 
