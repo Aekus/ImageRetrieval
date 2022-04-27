@@ -65,6 +65,6 @@ class BaseModel():
             mean_losses.append(np.mean(losses_t[i]))
 
         if write_predictions:
-            write_dict(self.pred_outpath, losses)
+            write_dict(self.pred_outpath, predictions)
 
         return mean_losses, predictions
