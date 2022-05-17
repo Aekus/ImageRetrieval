@@ -78,8 +78,7 @@ class BaseModel():
         return mean_losses, predictions
 
     def _create_image_embeddings(self):
-
-        with torch.no_grad:
+        with torch.no_grad():
             self.encode_images = torch.zeros((len(self.paths), 512))
             for i in range(0, len(self.paths), self.batchsize):
                 batch = self.paths[i:i + self.batchsize]
