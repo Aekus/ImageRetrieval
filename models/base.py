@@ -13,6 +13,7 @@ class BaseModel():
         self.batchsize = args["batchsize"]
         self.pred_outpath = args["pred_outpath"]
         self.model, self.preprocess = clip.load("ViT-B/32", device=self.device)
+        self.encode_images = None
 
     def image_to_tensor(self, path):
         with torch.no_grad():
@@ -23,6 +24,9 @@ class BaseModel():
         preprocessed_images = [self.image_to_tensor(path) for path in paths]
 
         return torch.stack(preprocessed_images).to(self.device)
+
+    def encode_images(self, image_tensor):
+        self.model.encode_image(image_tensor)
 
     def loss(self, im1, im2):
         with torch.no_grad():
@@ -37,7 +41,11 @@ class BaseModel():
         return None, None
 
     def eval(self, annotations, write_predictions=True):
+        if not self.encoded_images:
+            self._create_image_embeddings()
+
         predictions = {"predictions": []}
+
         for annot in tqdm(annotations["annotations"]):
             path = annot["source"]
             feedbacks = annot["feedbacks"]
@@ -68,3 +76,12 @@ class BaseModel():
             write_dict(self.pred_outpath, predictions)
 
         return mean_losses, predictions
+
+    def _create_image_embeddings(self):
+
+        with torch.no_grad:
+            self.encode_images = torch.zeros((len(self.paths), 512))
+            for i in range(0, len(self.paths), self.batchsize):
+                batch = self.paths[i:i + self.batchsize]
+                images = self.image_list_to_tensor(batch)
+                self.encoded_images[i:i + self.batchsize, :] = self.encode_images(images)

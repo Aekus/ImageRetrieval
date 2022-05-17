@@ -1,5 +1,6 @@
 import fiftyone.zoo as foz
 import argparse
+from datasets.cub_2011 import Cub200DataSet
 
 
 def download_coco(classes, num_samples, directory):
@@ -11,6 +12,10 @@ def download_coco(classes, num_samples, directory):
         max_samples=num_samples,
         dataset_dir=directory,
     )
+
+
+def download_cub(directory):
+    return Cub200DataSet(root=directory)
 
 
 if __name__ == '__main__':
@@ -25,4 +30,5 @@ if __name__ == '__main__':
     directory = args.directory
     if dataset == "coco":
         download_coco(args.classes, args.numsamples, directory)
-
+    if dataset == "cub":
+        download_coco(directory)

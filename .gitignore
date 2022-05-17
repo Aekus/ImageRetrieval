@@ -1,0 +1,6 @@
+/venv/
+/coco_annotations.json
+/coco_manual_annotations.jsonl
+/cub_annotations.json
+/data/
+/CUB_200_2011/

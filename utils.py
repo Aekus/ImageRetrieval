@@ -1,5 +1,6 @@
 import json
 import os
+import glob
 from PIL import Image
 
 """
@@ -31,10 +32,8 @@ def get_area(x1, y1, x2, y2):
 File path utils
 """
 
-
-def listdir_full_path(dir_name):
-    return [os.path.join(dir_name, file_name) for file_name in os.listdir(dir_name)]
-
+def listdir_jpg_paths(dir_name):
+    return glob.glob(dir_name + '**/*.jpg', recursive=True)
 
 """
 Image utils

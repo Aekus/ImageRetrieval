@@ -6,19 +6,20 @@ import torch
 class FullConcatModel(BaseModel):
 
     def predict(self, feedbacks):
+        if not self.encoded_images:
+            self._create_image_embeddings()
+
         with torch.no_grad():
             utterance = ' '.join(feedbacks)
             text = clip.tokenize([utterance]).to(self.device)
 
             best_score = 0
             best_index = 0
-            for i in range(0, len(self.paths), self.batchsize):
-                batch = self.paths[i:i + self.batchsize]
-                images = self.image_list_to_tensor(batch)
 
-                logits = self.model(images, text)[1]
-                if torch.max(logits) > best_score:
-                    best_score = torch.max(logits)
-                    best_index = i + torch.argmax(logits)
+            encoded_text = self.model.encode_text(text)
+            eval_vector = torch.matmul(self.encoded_images, self.encoded_text)
+
+            best_score = torch.max(eval_vector)
+            best_index = torch.argmax(eval_vector)
 
             return self.paths[best_index], best_score.item()
