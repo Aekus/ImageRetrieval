@@ -26,7 +26,7 @@ class BaseModel():
         return torch.stack(preprocessed_images).to(self.device)
 
     def encode_images(self, image_tensor):
-        self.model.encode_image(image_tensor)
+        return self.model.encode_image(image_tensor)
 
     def loss(self, im1, im2):
         with torch.no_grad():
@@ -79,7 +79,7 @@ class BaseModel():
 
     def _create_image_embeddings(self):
         with torch.no_grad():
-            self.encode_images = torch.zeros((len(self.paths), 512))
+            self.encoded_images = torch.zeros((len(self.paths), 512))
             for i in range(0, len(self.paths), self.batchsize):
                 batch = self.paths[i:i + self.batchsize]
                 images = self.image_list_to_tensor(batch)
