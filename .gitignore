@@ -4,3 +4,5 @@
 /cub_annotations.json
 /data/
 /CUB_200_2011/
+/__pycache__/
+/.idea
