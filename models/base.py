@@ -13,7 +13,7 @@ class BaseModel():
         self.batchsize = args["batchsize"]
         self.pred_outpath = args["pred_outpath"]
         self.model, self.preprocess = clip.load("ViT-B/32", device=self.device)
-        self.encode_images = None
+        self.encoded_images = None
 
     def image_to_tensor(self, path):
         with torch.no_grad():
