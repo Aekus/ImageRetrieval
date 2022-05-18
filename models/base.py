@@ -1,10 +1,10 @@
 import torch
 import clip
 import numpy as np
+import logging
 from tqdm import tqdm
 from utils import load_image, write_dict
 from itertools import zip_longest
-
 
 class BaseModel():
     def __init__(self, args):
@@ -14,6 +14,7 @@ class BaseModel():
         self.pred_outpath = args["pred_outpath"]
         self.model, self.preprocess = clip.load("ViT-B/32", device=self.device)
         self.encoded_images = None
+        self.logger = logging.getLogger('BaseModel')
 
     def image_to_tensor(self, path):
         with torch.no_grad():
@@ -79,8 +80,10 @@ class BaseModel():
 
     def _create_image_embeddings(self):
         with torch.no_grad():
+            self.logger.log("creating image embeddings")
             self.encoded_images = torch.zeros((len(self.paths), 512)).to(self.device)
-            for i in range(0, len(self.paths), self.batchsize):
+            for i in tqdm(range(0, len(self.paths), self.batchsize)):
                 batch = self.paths[i:i + self.batchsize]
                 images = self.image_list_to_tensor(batch)
                 self.encoded_images[i:i + self.batchsize, :] = self.encode_images(images)
+            self.logger.log("finished creating image embeddings")
