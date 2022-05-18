@@ -41,7 +41,7 @@ class BaseModel():
         return None, None
 
     def eval(self, annotations, write_predictions=True):
-        if self.encoded_images is not None:
+        if self.encoded_images is None:
             self._create_image_embeddings()
 
         predictions = {"predictions": []}

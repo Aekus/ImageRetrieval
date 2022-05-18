@@ -6,7 +6,7 @@ import torch
 class FullConcatModel(BaseModel):
 
     def predict(self, feedbacks):
-        if self.encoded_images is not None:
+        if self.encoded_images is None:
             self._create_image_embeddings()
 
         with torch.no_grad():
