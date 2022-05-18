@@ -90,4 +90,6 @@ class BaseModel():
                 batch = self.paths[i:i + self.batchsize]
                 images = self.image_list_to_tensor(batch)
                 self.encoded_images[i:i + self.batchsize, :] = self.encode_images(images)
+
+            self.encoded_images = torch.nn.functional.normalize(self.encoded_images, dim=1)
             self.logger.info("finished creating image embeddings")

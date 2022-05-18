@@ -16,7 +16,9 @@ class FullConcatModel(BaseModel):
             best_score = 0
             best_index = 0
 
-            encoded_text = self.model.encode_text(text)
+            encoded_text = self.model.encode_text(text).float()
+            encoded_text = torch.nn.functional.normalize(encoded_text, dim=1)
+
             eval_vector = torch.matmul(self.encoded_images, torch.t(encoded_text))
 
             best_score = torch.max(eval_vector)
