@@ -43,7 +43,7 @@ class UpdateDirModel(BaseModel):
 
                 epsilon = 1e-5
                 while True:
-                    encoded_u = encoded_u_prev + epsilon * encoded_u_next
+                    encoded_u = (1 - epsilon) * encoded_u_prev + epsilon * encoded_u_next
                     encoded_u = torch.nn.functional.normalize(encoded_u, dim=1)
 
                     eval_vector = torch.matmul(self.encoded_images, torch.t(encoded_u))
