@@ -80,10 +80,10 @@ class BaseModel():
 
     def _create_image_embeddings(self):
         with torch.no_grad():
-            self.logger.log("creating image embeddings")
+            self.logger.info("creating image embeddings")
             self.encoded_images = torch.zeros((len(self.paths), 512)).to(self.device)
             for i in tqdm(range(0, len(self.paths), self.batchsize)):
                 batch = self.paths[i:i + self.batchsize]
                 images = self.image_list_to_tensor(batch)
                 self.encoded_images[i:i + self.batchsize, :] = self.encode_images(images)
-            self.logger.log("finished creating image embeddings")
+            self.logger.info("finished creating image embeddings")
