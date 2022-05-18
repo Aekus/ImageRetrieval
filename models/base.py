@@ -15,6 +15,7 @@ class BaseModel():
         self.model, self.preprocess = clip.load("ViT-B/32", device=self.device)
         self.encoded_images = None
         self.logger = logging.getLogger('BaseModel')
+        self.logger.setLevel(logging.INFO)
 
     def image_to_tensor(self, path):
         with torch.no_grad():
@@ -47,6 +48,7 @@ class BaseModel():
 
         predictions = {"predictions": []}
 
+        self.logger.info("making predictions")
         for annot in tqdm(annotations["annotations"]):
             path = annot["source"]
             feedbacks = annot["feedbacks"]
@@ -64,6 +66,8 @@ class BaseModel():
 
                 loss = self.loss(load_image(path), load_image(pred_path))
                 prediction["losses"].append(loss)
+
+        self.logger.info("finished making predictions")
 
         losses = [prediction["losses"] for prediction in predictions["predictions"]]
 
