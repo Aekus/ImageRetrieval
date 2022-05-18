@@ -86,9 +86,9 @@ class UpdateDirModel(BaseModel):
                 prediction["losses"].append(loss)
 
                 if pred_path == path:
-                    predictions["predicted outputs"].extend([pred_path] * (len(feedbacks) - i))
-                    predictions["clip scores"].extend([score] * (len(feedbacks) - i))
-                    predictions["losses"].extend([loss] * (len(feedbacks) - i))
+                    prediction["predicted outputs"].extend([pred_path] * (len(feedbacks) - i))
+                    prediction["clip scores"].extend([score] * (len(feedbacks) - i))
+                    prediction["losses"].extend([loss] * (len(feedbacks) - i))
 
                     break
 
