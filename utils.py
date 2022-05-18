@@ -33,7 +33,7 @@ File path utils
 """
 
 def listdir_jpg_paths(dir_name):
-    return glob.glob(dir_name + '**/*.jpg', recursive=True)
+    return glob.glob(dir_name + '/**/*.jpg', recursive=True)
 
 """
 Image utils
