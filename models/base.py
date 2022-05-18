@@ -82,6 +82,9 @@ class BaseModel():
 
         return mean_losses, predictions
 
+    def set_image_embeddings(self, encoded_images):
+        self.encoded_images = encoded_images.detach().clone().to(self.device)
+
     def _create_image_embeddings(self):
         with torch.no_grad():
             self.logger.info("creating image embeddings")
