@@ -61,6 +61,7 @@ class BaseModel():
 
             for i in range(1, len(feedbacks) + 1):
                 pred_path, score = self.predict(feedbacks[:i])
+
                 prediction["predicted outputs"].append(pred_path)
                 prediction["clip scores"].append(score)
 
@@ -68,6 +69,10 @@ class BaseModel():
                 prediction["losses"].append(loss)
 
                 if pred_path == path:
+                    predictions["predicted outputs"].extend([pred_path] * (len(feedbacks) - i))
+                    predictions["clip scores"].extend([score] * (len(feedbacks) - i))
+                    predictions["losses"].extend([loss] * (len(feedbacks) - i))
+
                     break
 
         self.logger.info("finished making predictions")

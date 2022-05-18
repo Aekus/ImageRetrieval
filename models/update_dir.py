@@ -79,11 +79,18 @@ class UpdateDirModel(BaseModel):
             for i in range(1, len(feedbacks) + 1):
                 pred_path, score, encoded_u = self.predict(feedbacks[:i], encoded_u_prev=encoded_u)
 
-                prediction["predicted outputs"].append(path)
+                prediction["predicted outputs"].append(pred_path)
                 prediction["clip scores"].append(score)
 
                 loss = self.loss(load_image(path), load_image(pred_path))
                 prediction["losses"].append(loss)
+
+                if pred_path == path:
+                    predictions["predicted outputs"].extend([pred_path] * (len(feedbacks) - i))
+                    predictions["clip scores"].extend([score] * (len(feedbacks) - i))
+                    predictions["losses"].extend([loss] * (len(feedbacks) - i))
+
+                    break
 
         self.logger.info("finished making predictions")
 
