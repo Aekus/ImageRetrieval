@@ -79,7 +79,7 @@ class BaseModel():
 
     def _create_image_embeddings(self):
         with torch.no_grad():
-            self.encoded_images = torch.zeros((len(self.paths), 512))
+            self.encoded_images = torch.zeros((len(self.paths), 512)).to(self.device)
             for i in range(0, len(self.paths), self.batchsize):
                 batch = self.paths[i:i + self.batchsize]
                 images = self.image_list_to_tensor(batch)
